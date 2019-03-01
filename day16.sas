@@ -1,0 +1,13 @@
+data concat;
+a='   Hi';
+b='I   ';
+c='  am  ';
+d='Bibi';
+new=cat(a,b,c,d);
+new_1=catt(b,c);
+new_2=cats(a,b,c,d);
+new_3=catx(':',a,b,c,d);
+new_4=strip(c);
+run;
+proc print;
+run;

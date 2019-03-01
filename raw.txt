@@ -1,0 +1,12 @@
+12 34 aaa
+14 56 bbb
+24 24 ccc
+12 34 aaa
+14 56 bbb
+24 24 ccc
+12 34 aaa
+14 56 bbb
+24 24 ccc
+12 34 aaa
+14 56 bbb
+24 24 ccc
