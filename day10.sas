@@ -23,7 +23,7 @@ run;
 proc print data=lab;
 format race r. sex s.;
 run;
-/*in order to see the format in the outpit*/
+/*in order to see the format in the output*/
 proc format fmtlib ;
 run;
 /*character to character*/

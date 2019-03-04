@@ -1,0 +1,6 @@
+INPUT 
+@1 PID 2. /*Patient id*/
+@3 AGE 2. /*Age of patients*/
+@5 SEX $1. /*Patient sex*/
+@6 RACE $1. /* Patient race(White,Black,Other)*/
+;

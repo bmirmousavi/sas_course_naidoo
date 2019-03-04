@@ -1,0 +1,259 @@
+data demo;
+infile cards missover;
+input pid age sex$;
+cards;
+100 50 Male
+200 60 Female
+300 50 MALE
+400 42 Female
+500 34 Male
+600 54 Male
+700 56 
+;
+run;
+
+proc print data=demo;
+run;
+proc freq data=demo;
+tables sex /  list missing;
+where age gt 50;
+run;
+PROC GCHART DATA=DEMO;
+VBAR3D SEX;
+RUN;
+PROC SORT DATA=DEMO OUT=DEMO1;
+BY AGE;
+RUN;
+PROC PRINT DATA=DEMO1;
+RUN;
+data demo2;
+infile cards missover;
+input pid age sex$;
+cards;
+100 50 Male
+200 60 Female
+300 50 M
+400 42 Female
+500 34 Male
+600 54 Male
+700 56 
+;
+run;
+DATA DEMO3;
+SET DEMO2;
+IF SEX="M" THEN SEX="MALE";
+SEX=UPCASE(SEX);
+RUN;
+PROC PRINT DATA=DEMO3;
+WHERE SEX="FEMALE" AND AGE GT 50;
+RUN;
+
+OPTIONS NONUMBER NODATE CAPS;
+TITLE "THIS IS MY TEST";
+LIBNAME TEST1 "\\cdc.gov\private\M728\pcz0\sas_course_naidoo-master\sas_course_naidoo-master";
+DATA TEST1.A;
+INPUT PID AGE SEX$ EMAIL$19. @29 ADDRESS$13. +2 CITY$3. ;
+CARDS;
+1 23 FEMALE B.MIR@GMAIL.COM  gAITHERSBURGNBMHN
+2 54 MALE AMIR.BIBI@YAHOO.COMbETHESDAUSANMBMNBNB
+3 35 MALE AHMADSAJED.B@HOTLINE.COMbETHESDAUSANMBMNBNB
+;
+RUN;
+PROC PRINT DATA=TEST1.A;
+RUN;
+
+OPTION YEARCUTOFF=1800;
+
+/*data value       informat               format
+12/10/1988			ddmmyy10.			ddmmyy10.
+12-10-1988			ddmmyy10.           ddmmyyd10.
+12.10.1998          ddmmyy10.           ddmmyyp10.
+12:10:1998          ddmmyy10.           ddmmyyc10.
+12101998            ddmmyy10.           ddmmyyb10.
+*/
+DATA TEST1.B;
+INFILE CARDS MISSOVER;
+SET TEST1.A;
+DROP PID;
+INPUT VDATE:DDMMYY10. RACE$; /*informat*/
+FORMAT VDATE DDMMYY10.;
+CARDS;
+11/02/1987 WHITE
+11052020 BLACK
+21.11.34
+;
+RUN;
+PROC PRINT DATA=TEST1.B;
+RUN;
+PROC CONTENTS DATA=TEST1.B VARNUM;
+RUN;
+
+DATA TEST1.C;
+INPUT  ADDRESS $19.  CITY $15.  STATE $2. ZIPCODE;
+CARDS;
+14401 PEBBLE HILL, NORTH POTOMAC, MD 20878 
+;
+RUN;
+PROC PRINT;
+RUN;
+
+
+DATA TEST1.D;
+INPUT  ADDRESS & $19.  CITY & $15.  STATE $2. ZIPCODE;
+CARDS;
+14401 PEBBLE HILL,  NORTH POTOMAC,  MD 20878 
+14401 PEBBLE DRIVE,  PG COUNTY MONTAIN,  MD 20878 
+;
+RUN;
+PROC PRINT;
+RUN;
+
+data cd;
+infile cards dlm="$&,@" missover firstobs=2 obs=3;
+input pid age sex$;
+cards;
+12&34,f
+43,54@m
+21$16,
+;
+run;
+proc print ;
+run;
+
+
+
+
+
+FILENAME patient 'C:\Users\moghimi\Desktop\SAS_Course_bibi\MY Practice\patient.txt';
+FILENAME INPUT 'C:\Users\moghimi\Desktop\SAS_Course_bibi\MY Practice\patientinp.txt';
+
+
+
+
+DATA patient; 
+INFILE patient MISSOVER LRECL=9999 ;
+%INC INPUT;
+RUN;
+
+
+PROC FREQ DATA=patient;
+TABLES SEX/ list MISSING;
+WHERE AGE GT 50;
+RUN;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*DM LOG 'CLEAR';*/
+/*DM OUT 'CLEAR';*/
+/*LIBNAME _ALL_ CLEAR;*/
+
+PROC DATASETS LIBRARY=WORK ; QUIT;
+
+/*OPTIONS NOCENTER MPRINT MSGLEVEL=I MERGENOBY=ERROR SOURCE2;*/
+OPTION NODATE NUMBER PAGENO=1 NOCENTER PS=40;
+TITLE "LETS PRACTICE SAS";
+FOOTNOTE"I LIKE SAS";
+
+
+FILENAME ED 'C:\Users\moghimi\Desktop\SAS_Course_bibi\MY Practice\ED2016\ed2016';
+FILENAME INPUT 'C:\Users\moghimi\Desktop\SAS_Course_bibi\MY Practice\ED2016\ed16inp.txt';
+FILENAME FORMAT 'C:\Users\moghimi\Desktop\SAS_Course_bibi\MY Practice\ED2016\ed16for.txt';
+FILENAME LABEL 'C:\Users\moghimi\Desktop\SAS_Course_bibi\MY Practice\ED2016\ed16lab.txt';
+
+
+DATA ED; 
+INFILE ED MISSOVER LRECL=9999;
+%INC INPUT;
+%INC FORMAT;
+%INC LABEL;
+RUN;
+
+
+PROC FREQ DATA=ED;
+%INC LABEL;
+TABLES SEX/LIST MISSING;
+WHERE AGE GT 35;
+FORMAT SEX SEXF.;
+RUN;
+
+PROC FREQ DATA=ED;
+%INC LABEL;
+TABLES SEX*RACER / NOROW NOCOL NOPERCENT MISSPRINT
+                   PLOTS=FREQPLOT;
+FORMAT SEX SEXF. RACER RACERF.;
+RUN;
+
+
+PROC  PRINT DATA=ED;
+%INC LABEL;
+WHERE SEX=1 AND AGE GT 90;
+FORMAT SEX SEXF.;
+RUN;
+
+PROC FREQ DATA=ED;
+%INC LABEL;
+TABLES SEX/LIST MISSING;
+WHERE SEX=1 AND AGE GT 91;
+FORMAT SEX SEXF.;
+RUN;

@@ -24,3 +24,6 @@ data=sashelp.class dbms=xls replace;
 run;
 proc print data=sashelp.class;
 run;
+
+
+proc import

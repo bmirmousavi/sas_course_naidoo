@@ -29,7 +29,6 @@ proc print data=trials2;
 run;
 
 data trials3;
-infile cards missover;
 input center$6. trial$7. sub;
 cards;
 appolo phase1 78

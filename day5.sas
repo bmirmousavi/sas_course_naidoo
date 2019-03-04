@@ -10,7 +10,7 @@ run;
 /*when there is : in the output, whenever in a row it reaches to a space
 it will cut it and count the countinue for the second var*/
 data naidu2;
-input name1$ : 10. name2$ 30.;
+input name1$ : 10. name2$ : 30. name3$15.;
 datalines;
 bmnxb nvnbvx  nmnnmbnmnx
 kjh ckjh    ddj jiwududuhef
